@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html
+    environment:
+      - DB_HOST=localhost
+      - DB_NAME=week2
+      - DB_USER=sql
+      - DB_PASSWORD=1234
+    depends_on:
+      - database
+
+  database:
+    image: mysql:5.7
+    environment:
+      - MYSQL_DATABASE=week2
+      - MYSQL_USER=sql
+      - MYSQL_PASSWORD=1234
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./C:\Users\AVI03\week2.sql:/docker-entrypoint-initdb.d/week2.sql
+
+volumes:
+  db-data:
